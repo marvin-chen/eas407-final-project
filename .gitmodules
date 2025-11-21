@@ -1,0 +1,3 @@
+[submodule "data/raw_corpus"]
+	path = data/raw_corpus
+	url = https://github.com/chinese-poetry/chinese-poetry.git
