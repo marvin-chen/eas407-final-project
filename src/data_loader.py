@@ -19,8 +19,8 @@ class PoetryLoader:
             data_dir (str): Path to chinese-poetry repository
         """
         self.data_dir = Path(data_dir)
-        self.tang_dir = self.data_dir / 'json'
-        self.ci_dir = self.data_dir / 'ci'
+        self.tang_dir = self.data_dir / '全唐诗'
+        self.ci_dir = self.data_dir / '宋词'
         
     def load_tang_poems(self, max_poems=None):
         """
@@ -133,13 +133,19 @@ if __name__ == '__main__':
     print("Loading Tang poems...")
     tang_df = loader.load_tang_poems(max_poems=100)
     print(f"Loaded {len(tang_df)} Tang poems")
-    print("\nSample poem:")
-    print(tang_df.iloc[0])
+    if len(tang_df) > 0:
+        print("\nSample poem:")
+        print(tang_df.iloc[0])
+    else:
+        print("No poems loaded. Check data directory.")
     
     # Load sample Song ci
     print("\n" + "="*50)
     print("Loading Song ci...")
     ci_df = loader.load_song_ci(max_poems=50)
     print(f"Loaded {len(ci_df)} Song ci")
-    print("\nSample ci:")
-    print(ci_df.iloc[0])
+    if len(ci_df) > 0:
+        print("\nSample ci:")
+        print(ci_df.iloc[0])
+    else:
+        print("No ci loaded. Check data directory.")

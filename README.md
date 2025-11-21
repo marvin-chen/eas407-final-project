@@ -9,3 +9,8 @@ This project analyzes formal properties of classical Chinese poetry (Tang, Song,
 - End-of-line character patterns
 - Structural parallelism
 - Genre comparison (shi 詩, ci 詞, qu 曲)
+
+## Cloning with poetry data
+
+After cloning, run:
+git submodule update --init --recursive
