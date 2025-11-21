@@ -1,0 +1,27 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.so
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (large files)
+data/raw/
+*.json
+*.csv
+
+# Output
+output/*.png
+output/*.pdf
+
+# System
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
