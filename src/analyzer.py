@@ -131,8 +131,8 @@ if __name__ == '__main__':
     print("LOADING TANG POETRY CORPUS")
     print("="*60)
     
-    # Load Tang poems (sample for MVP)
-    tang_raw = analyzer.loader.load_tang_poems(max_poems=500)
+    # Load Tang poems 
+    tang_raw = analyzer.loader.load_tang_poems(max_poems=1000)
     print(f"\nLoaded {len(tang_raw)} Tang poems")
     
     # Process features

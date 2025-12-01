@@ -69,14 +69,19 @@ class PoetryFeatureExtractor:
             lines (list): List of poetry lines
             
         Returns:
-            list: End characters
+            list: End characters (empty strings filtered out)
         """
-        return [PoetryFeatureExtractor.get_end_character(line) for line in lines]
+        end_chars = [PoetryFeatureExtractor.get_end_character(line) for line in lines]
+        # Filter out empty strings (lines with no Chinese characters)
+        return [char for char in end_chars if char]
     
     @staticmethod
     def classify_poem_form(lines):
         """
         Classify poem by structural form (shi 詩 only, not ci or qu)
+        
+        Note: Many classical Chinese poems format each line as two hemistichs,
+        e.g., "五字，五字。" appears as 10 chars but represents a 5-char line.
         
         Args:
             lines (list): List of poetry lines
@@ -97,14 +102,28 @@ class PoetryFeatureExtractor:
         length = line_lengths[0]
         
         # Classify common Tang shi forms
+        # Handle both single-line and double-hemistich formats
         if line_count == 4 and length == 5:
             return 'wujue'  # 五言絕句 (5-char quatrain)
         elif line_count == 4 and length == 7:
             return 'qijue'  # 七言絕句 (7-char quatrain)
+        elif line_count == 4 and length == 10:  # Two 5-char hemistichs per line
+            return 'wujue'  # 五言絕句
+        elif line_count == 4 and length == 14:  # Two 7-char hemistichs per line
+            return 'qijue'  # 七言絕句
         elif line_count == 8 and length == 5:
             return 'wulu'   # 五言律詩 (5-char regulated verse)
         elif line_count == 8 and length == 7:
             return 'qilu'   # 七言律詩 (7-char regulated verse)
+        elif line_count == 8 and length == 10:  # Two 5-char hemistichs per line
+            return 'wulu'   # 五言律詩
+        elif line_count == 8 and length == 14:  # Two 7-char hemistichs per line
+            return 'qilu'   # 七言律詩
+        # Handle longer regulated verse forms
+        elif line_count > 8 and length in [5, 10]:
+            return 'wupai'  # 五言排律 (long regulated verse, 5-char)
+        elif line_count > 8 and length in [7, 14]:
+            return 'qipai'  # 七言排律 (long regulated verse, 7-char)
         else:
             return 'other'
     
