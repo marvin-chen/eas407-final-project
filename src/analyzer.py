@@ -186,6 +186,10 @@ class PoetryAnalyzer:
         print(classification_report(y_test, y_pred, 
                                     target_names=['Tang', 'Song']))
         
+        # 5 fold cross validation
+        scores = cross_val_score(clf, X, y, cv=5)
+        print("CV accuracy: %.3f ± %.3f" % (scores.mean(), scores.std()))
+        
         # Confusion matrix
         cm = confusion_matrix(y_test, y_pred)
         plt.figure(figsize=(6, 5))
@@ -199,6 +203,7 @@ class PoetryAnalyzer:
         plt.savefig('confusion_matrix.png', dpi=300, bbox_inches='tight')
         plt.close()
         print("Saved confusion matrix to confusion_matrix.png")
+        
         
         # Feature importance
         importance = pd.DataFrame({
