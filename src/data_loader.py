@@ -7,6 +7,7 @@ import os
 import re
 from pathlib import Path
 import pandas as pd
+from opencc import OpenCC # For traditional to simplified Chinese conversion
 
 class PoetryLoader:
     """Load and preprocess Chinese poetry data"""
@@ -21,6 +22,9 @@ class PoetryLoader:
         self.data_dir = Path(data_dir)
         self.tang_dir = self.data_dir / '全唐诗'
         self.ci_dir = self.data_dir / '宋词'
+        
+        self.t2s = OpenCC('t2s')  # t2s = Traditional to Simplified
+
         
     def load_tang_poems(self, max_poems=None):
         """
@@ -42,10 +46,15 @@ class PoetryLoader:
                 data = json.load(f)
                 
                 for poem in data:
+                    # Convert traditional to simplified Chinese
+                    title = self.t2s.convert(poem.get('title', ''))
+                    author = self.t2s.convert(poem.get('author', ''))
+                    lines = [self.t2s.convert(line) for line in poem.get('paragraphs', [])]
+                    
                     poems.append({
-                        'title': poem.get('title', ''),
-                        'author': poem.get('author', ''),
-                        'lines': poem.get('paragraphs', []),
+                        'title': title,
+                        'author': author,
+                        'lines': lines,
                         'dynasty': 'Tang'
                     })
                     

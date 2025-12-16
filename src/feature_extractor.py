@@ -78,7 +78,7 @@ class PoetryFeatureExtractor:
     @staticmethod
     def classify_poem_form(lines):
         """
-        Classify poem by structural form (shi 詩 only, not ci or qu)
+        Classify poem by structural form (this is more relevant for shi and not ci)
         
         Note: Many classical Chinese poems format each line as two hemistichs,
         e.g., "五字，五字。" appears as 10 chars but represents a 5-char line.
